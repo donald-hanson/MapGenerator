@@ -35,7 +35,7 @@ namespace MapGenerator.Wang
             Coordinate start = new Coordinate(x, y);
             stack.Add(start);
 
-            RecurseGenerate(stack);
+            Generate(stack);
         }
 
         private int SelectNextIndex(ICollection visited)
@@ -48,63 +48,63 @@ namespace MapGenerator.Wang
             return visited.Count - 1;
         }
 
-        private void RecurseGenerate(List<Coordinate> stack)
+        private void Generate(List<Coordinate> cells)
         {
-            var startIndex = SelectNextIndex(stack);
-            var startPosition = stack[startIndex];
-            var start = GetTileAt(startPosition.X, startPosition.Y);
-
-            var north = GetNeighborTile(startPosition, WangDirection.North);
-            var south = GetNeighborTile(startPosition, WangDirection.South);
-            var east = GetNeighborTile(startPosition, WangDirection.East);
-            var west = GetNeighborTile(startPosition, WangDirection.West);
-
-            var neighbors = new[] { north, south, east, west };
-            neighbors = neighbors.Where(t => !t.Item1.IsNull && t.Item1.Index == 0).ToArray();
-
-            if (neighbors.Length == 0)
+            while (true)
             {
-                stack.RemoveAt(startIndex);
-                if (stack.Count > 0)
+                var startIndex = SelectNextIndex(cells);
+                var startPosition = cells[startIndex];
+                var start = GetTileAt(startPosition.X, startPosition.Y);
+
+                var north = GetNeighborTile(startPosition, WangDirection.North);
+                var south = GetNeighborTile(startPosition, WangDirection.South);
+                var east = GetNeighborTile(startPosition, WangDirection.East);
+                var west = GetNeighborTile(startPosition, WangDirection.West);
+
+                var neighbors = new[] {north, south, east, west};
+                neighbors = neighbors.Where(t => !t.Item1.IsNull && t.Item1.Index == 0).ToArray();
+
+                if (neighbors.Length == 0)
                 {
-                    RecurseGenerate(stack);
+                    cells.RemoveAt(startIndex);
+                    if (cells.Count > 0)
+                        continue;
+                    return;
                 }
-                return;
+
+                var neighborIndex = GetRandomNext(neighbors.Length);
+                var (neighbor, position, direction) = neighbors[neighborIndex];
+
+                switch (direction)
+                {
+                    case WangDirection.North:
+                        start.North = true;
+                        neighbor.South = true;
+                        ApplySouthEastCornerRule(position, neighbor);
+                        ApplySouthWestCornerRule(position, neighbor);
+                        break;
+                    case WangDirection.East:
+                        start.East = true;
+                        neighbor.West = true;
+                        ApplyNorthWestCornerRule(position, neighbor);
+                        ApplySouthWestCornerRule(position, neighbor);
+                        break;
+                    case WangDirection.South:
+                        start.South = true;
+                        neighbor.North = true;
+                        ApplyNorthEastCornerRule(position, neighbor);
+                        ApplyNorthWestCornerRule(position, neighbor);
+                        break;
+                    case WangDirection.West:
+                        start.West = true;
+                        neighbor.East = true;
+                        ApplyNorthEastCornerRule(position, neighbor);
+                        ApplySouthEastCornerRule(position, neighbor);
+                        break;
+                }
+
+                cells.Add(position);
             }
-
-            var neighborIndex = GetRandomNext(neighbors.Length);
-            var (neighbor, position, direction) = neighbors[neighborIndex];
-
-            switch (direction)
-            {
-                case WangDirection.North:
-                    start.North = true;
-                    neighbor.South = true;
-                    ApplySouthEastCornerRule(position, neighbor);
-                    ApplySouthWestCornerRule(position, neighbor);
-                    break;
-                case WangDirection.East:
-                    start.East = true;
-                    neighbor.West = true;
-                    ApplyNorthWestCornerRule(position, neighbor);
-                    ApplySouthWestCornerRule(position, neighbor);
-                    break;
-                case WangDirection.South:
-                    start.South = true;
-                    neighbor.North = true;
-                    ApplyNorthEastCornerRule(position, neighbor);
-                    ApplyNorthWestCornerRule(position, neighbor);
-                    break;
-                case WangDirection.West:
-                    start.West = true;
-                    neighbor.East = true;
-                    ApplyNorthEastCornerRule(position, neighbor);
-                    ApplySouthEastCornerRule(position, neighbor);
-                    break;
-            }
-
-            stack.Add(position);
-            RecurseGenerate(stack);
         }
 
         private WangBlobTile EnsureNotNullTile(WangBlobTile input, Coordinate pos)
