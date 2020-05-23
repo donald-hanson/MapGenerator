@@ -6,40 +6,6 @@ namespace MapGenerator.Q3
 {
     public static class Vector3Extensions
     {
-        /*
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-
-        public Vertex3(float x, float y, float z)
-        {
-            X = x; Y = y; Z = z;
-        }
-
-        public Vertex3()
-        {
-        }
-
-        public void RotateZ(int degrees)
-        {
-            RotateZ((float)(degrees * Math.PI / 180.0));
-        }
-
-        public void RotateZ(float radians)
-        {
-            System.Numerics.Vector3 rotAxis = System.Numerics.Vector3.UnitZ;
-            System.Numerics.Quaternion q = System.Numerics.Quaternion.CreateFromAxisAngle(rotAxis,  radians);
-            System.Numerics.Vector3 aVector = new System.Numerics.Vector3(X, Y, Z);
-
-            // rotate
-            System.Numerics.Quaternion resultQ = q * (new System.Numerics.Quaternion(aVector, 0)) / q;
-
-            X = resultQ.X;
-            Y = resultQ.Y;
-            Z = resultQ.Z;
-        }
-        */
-
         public static Vector3 SetIndex(this Vector3 vector, int index, float value)
         {
             switch (index)
@@ -48,10 +14,8 @@ namespace MapGenerator.Q3
                     return new Vector3(value, vector.Y, vector.Z);
                 case 1:
                     return new Vector3(vector.X, value, vector.Z);
-                    break;
                 case 2:
                     return new Vector3(vector.X, vector.Y, value);
-                    break;
                 default:
                     throw new InvalidOperationException();
             }

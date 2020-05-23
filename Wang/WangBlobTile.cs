@@ -1,4 +1,6 @@
-﻿namespace MapGenerator.Wang
+﻿using System;
+
+namespace MapGenerator.Wang
 {
     public class WangBlobTile : WangTile
     {
@@ -70,6 +72,11 @@
 
         private bool HasFlag(int value)
         {
+            if (IsNull)
+            {
+                return false;
+            }
+
             return (Index & value) == value;
         }
 
@@ -77,7 +84,7 @@
         {
             if (IsNull || ReadOnly)
             {
-                return;
+                throw new InvalidOperationException("Attempt to modify a null or readonly tile");
             }
 
             if (set)

@@ -17,9 +17,9 @@ namespace MapGenerator
     {
         static async Task Main(string[] args)
         {
-            var w = 8;
-            var h = 8;
-            var m = new Wang.WangMazeMap(w, h, 5);
+            var w = 16;
+            var h = 16;
+            var m = new Wang.WangMazeMap(w, h, 5, 10, true);
             m.Generate();
 
             RenderConsole(m, w, h);
@@ -208,7 +208,6 @@ namespace MapGenerator
 
         private static async Task RenderBitmap(IWangMap<WangBlobTile> m, int w, int h)
         {
-            // http://www.cr31.co.uk/stagecast/art/blob/wang-2e2c/0.gif
             using (var img = new Image<Rgba32>(Configuration.Default, 32 * w, 32 * h))
             {
                 for (var x = 0; x < w; x++)
@@ -234,7 +233,7 @@ namespace MapGenerator
                     img.SaveAsPng(outputStream);
             }
         }
-
+        
         private static async Task<byte[]> GetTileBytes(int id)
         {
             var file = string.Format("{0}.gif", id);
@@ -244,6 +243,7 @@ namespace MapGenerator
             }
 
             var url = string.Format("http://www.cr31.co.uk/stagecast/art/blob/wang-2e2c/{0}.gif", id);
+            Console.WriteLine("Downloading tile from {0}", url);
             var client = new HttpClient();
             var bytes = await client.GetByteArrayAsync(url);
             await File.WriteAllBytesAsync(file, bytes);
