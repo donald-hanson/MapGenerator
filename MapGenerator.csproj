@@ -6,6 +6,68 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Q3\tile_1.map" />
+    <None Remove="Assets\Q3\tile_119.map" />
+    <None Remove="Assets\Q3\tile_127.map" />
+    <None Remove="Assets\Q3\tile_17.map" />
+    <None Remove="Assets\Q3\tile_21.map" />
+    <None Remove="Assets\Q3\tile_23.map" />
+    <None Remove="Assets\Q3\tile_255.map" />
+    <None Remove="Assets\Q3\tile_29.map" />
+    <None Remove="Assets\Q3\tile_31.map" />
+    <None Remove="Assets\Q3\tile_5.map" />
+    <None Remove="Assets\Q3\tile_7.map" />
+    <None Remove="Assets\Q3\tile_85.map" />
+    <None Remove="Assets\Q3\tile_87.map" />
+    <None Remove="Assets\Q3\tile_95.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Q3\tile_1.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_119.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_127.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_17.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_21.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_23.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_255.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_29.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_31.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_5.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_7.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_85.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_87.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Q3\tile_95.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-rc0001" />
   </ItemGroup>
 
