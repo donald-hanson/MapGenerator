@@ -6,13 +6,13 @@ using MapGenerator.Wang;
 
 namespace MapGenerator.Render
 {
-    public class Quake3Renderer : BaseRenderer<WangBlobTile>
+    public class Quake3Renderer : BaseRenderer<WangBlobTile, Quake3RenderOptions>
     {
         public Quake3Renderer(IWangMap<WangBlobTile> map, in int width, in int height) : base(map, in width, in height)
         {
         }
 
-        public override async Task Render()
+        public override async Task Render(Quake3RenderOptions options)
         {
             var m = await CreateWorld();
 
@@ -20,7 +20,7 @@ namespace MapGenerator.Render
             m.WriteTo(writer);
             var result = writer.ToString();
 
-            await File.WriteAllTextAsync(@"wang.map", result);
+            await File.WriteAllTextAsync(options.OutputFile ?? @"wang.map", result);
         }
 
         private async Task<Q3.Map> CreateWorld()
@@ -51,6 +51,8 @@ namespace MapGenerator.Render
                             face.Move(x * step, y * -1 * step, 0);
                         }
 
+                        brush.Patch?.Move(x * step, y * -1 * step, 0);
+
                         worldspawn.AddBrush(brush);
                     }
                 }
@@ -60,5 +62,10 @@ namespace MapGenerator.Render
             map.AddEntity(worldspawn);
             return map;
         }
+    }
+
+    public class Quake3RenderOptions
+    {
+        public string OutputFile { get; set; }
     }
 }

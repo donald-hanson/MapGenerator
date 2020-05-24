@@ -4,14 +4,14 @@ using MapGenerator.Wang;
 
 namespace MapGenerator.Render
 {
-    public class ConsoleRenderer : BaseRenderer<WangBlobTile>
+    public class ConsoleRenderer : BaseRenderer<WangBlobTile, ConsoleRenderOptions>
     {
         public ConsoleRenderer(IWangMap<WangBlobTile> map, in int width, in int height) : base(map, width, height)
         {
             
         }
 
-        public override async Task Render()
+        public override async Task Render(ConsoleRenderOptions options)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -31,5 +31,9 @@ namespace MapGenerator.Render
                 Console.WriteLine();
             }
         }
+    }
+
+    public class ConsoleRenderOptions
+    {
     }
 }

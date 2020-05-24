@@ -89,9 +89,17 @@ namespace MapGenerator.Render
             return await LoadMap(rules[0], rules[1]);
         }
 
+        private static string _rootDirectory;
+
+        public static void SetRootDirectory(string directory)
+        {
+            _rootDirectory = directory;
+        }
+
         private static async Task<Map> LoadMap(int id, int rotation = 0)
         {
-            var fileName = String.Format(@"Assets\Q3\tile_{0}.map", id);
+            string rootDir = _rootDirectory ?? @"Assets\Q3\";
+            var fileName = String.Format(@"{0}tile_{1}.map", rootDir, id);
             var text = await File.ReadAllTextAsync(fileName);
             var m = Map.Parse(new Tokenizer(text));
 
@@ -108,6 +116,8 @@ namespace MapGenerator.Render
                         {
                             face.RotateOrigin(vRotation, vOrigin);
                         }
+
+                        brush.Patch?.RotateOrigin(vRotation, vOrigin);
                     }
                 }
             }

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MapGenerator.Wang;
 
 namespace MapGenerator.Render
 {
-    public abstract class BaseRenderer<T>
+    public abstract class BaseRenderer<T, TOptions>
     {
         private readonly IWangMap<T> _map;
         private readonly int _width;
@@ -22,6 +20,6 @@ namespace MapGenerator.Render
             _height = height;
         }
 
-        public abstract Task Render();
+        public abstract Task Render(TOptions options);
     }
 }

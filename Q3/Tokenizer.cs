@@ -29,7 +29,7 @@ namespace MapGenerator.Q3
             public static Token StartBlock = new Token(TokenType.StartBlock, "{");
             public static Token EndBlock = new Token(TokenType.EndBlock, "}");
             public static Token StartParen = new Token(TokenType.StartParen, "(");
-            public static Token EndParen = new Token(TokenType.EndParen, "}");
+            public static Token EndParen = new Token(TokenType.EndParen, ")");
             public static Token EndOfStream = new Token(TokenType.EndOfStream, "}");
 
             public override string ToString()
@@ -90,14 +90,19 @@ namespace MapGenerator.Q3
             return token;
         }
 
-        public string GetNextValue()
+        public Token GetNextType(TokenType type)
         {
             Token t = GetNextToken();
-            if (t.Type != TokenType.Value)
+            if (t.Type != type)
             {
-                throw new FormatException("Expected a value, got a " + t);
+                throw new FormatException("Expected a "+ type +", got a " + t.Type);
             }
-            return t.Contents;
+            return t;
+        }
+
+        public string GetNextValue()
+        {
+            return GetNextType(TokenType.Value).Contents;
         }
     }
 }

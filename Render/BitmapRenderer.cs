@@ -19,7 +19,7 @@ namespace MapGenerator.Render
         Wang
     }
 
-    public class BitmapRenderer : BaseRenderer<WangBlobTile>
+    public class BitmapRenderer : BaseRenderer<WangBlobTile, BitmapRenderOptions>
     {
         private readonly BitmapTheme _theme;
 
@@ -28,7 +28,7 @@ namespace MapGenerator.Render
             _theme = theme;
         }
 
-        public override async Task Render()
+        public override async Task Render(BitmapRenderOptions options)
         {
             using (var img = new Image<Rgba32>(Configuration.Default, 32 * Width, 32 * Height))
             {
@@ -90,5 +90,9 @@ namespace MapGenerator.Render
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
+    }
+
+    public class BitmapRenderOptions
+    {
     }
 }
